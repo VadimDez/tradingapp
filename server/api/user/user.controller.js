@@ -106,6 +106,23 @@ export function changePassword(req, res, next) {
     });
 }
 
+export function updateInfo(req, res, next) {
+  var userId = req.user._id;
+
+  User.findByIdAsync(userId)
+    .then(user => {
+      user.name = String(req.body.name);
+      user.city = String(req.body.city);
+      user.state = String(req.body.state);
+
+      return user.saveAsync()
+        .then(() => {
+          res.status(204).end();
+        })
+        .catch(validationError(res));
+    }).catch(handleError(res));
+}
+
 /**
  * Get my info
  */

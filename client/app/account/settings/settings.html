@@ -2,8 +2,31 @@
 
 <div class="container">
   <div class="row">
+    
     <div class="col-sm-12">
-      <h1>Change Password</h1>
+      <h3>Change info</h3>
+      <form class="form" name="infoForm" ng-submit="vm.updateInfo()" novalidate>
+        <div class="form-group">
+          <label>Full name</label>
+          <input type="text" name="fullname" placeholder="Full name" class="form-control" ng-model="vm.info.name">
+        </div>
+
+        <div class="form-group">
+          <label>City</label>
+          <input type="text" name="city" placeholder="City" class="form-control" ng-model="vm.info.city">
+        </div>
+
+        <div class="form-group">
+          <label>State / Pricince</label>
+          <input type="text" name="state" placeholder="State" class="form-control" ng-model="vm.info.state">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+      </form>
+    </div>
+
+    <div class="col-sm-12">
+      <h3>Change Password</h3>
     </div>
     <div class="col-sm-12">
       <form class="form" name="form" ng-submit="vm.changePassword(form)" novalidate>
@@ -46,7 +69,7 @@
 
         <p class="help-block"> {{ vm.message }} </p>
 
-        <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
+        <button class="btn btn-primary" type="submit">Save changes</button>
       </form>
     </div>
   </div>

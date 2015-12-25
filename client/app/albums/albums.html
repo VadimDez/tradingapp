@@ -1,0 +1,26 @@
+<navbar></navbar>
+<div class="container">
+    <div ng-show="albumsCtrl.requestedTrades.length">
+        <h4>Requested by you:</h4>
+
+        <div ng-repeat="trade in albumsCtrl.requestedTrades">
+            {{ trade.album.name }} by {{ trade.album.artist }} <button class="btn btn-danger" ng-click="albumsCtrl.cancelTrade(trade)">Remove</button>
+        </div>
+    </div>
+
+    <div ng-show="albumsCtrl.requestedAlbums.length">
+        <h4>Requested to you:</h4>
+
+        <div ng-repeat="album in albumsCtrl.requestedAlbums">
+            {{ album.name }} by {{ album.artist }} <button class="btn btn-success">Accept</button> <button class="btn btn-danger" ng-click="albumsCtrl.cancelRequestedAlbum(album)">Remove</button>
+        </div>
+    </div>
+
+    <div>
+        <h4>Album list</h4>
+        <div ng-repeat="album in albumsCtrl.albums">
+            {{ album.name }} by {{ album.artist }} <button class="btn btn-secondary btn-sm" ng-hide="albumsCtrl.currentUser._id === album.user" ng-click="albumsCtrl.trade(album)">Trade</button>
+        </div>
+    </div>
+</div>
+<footer></footer>

@@ -6,8 +6,17 @@ class SettingsController {
   submitted = false;
   //end-non-standard
 
-  constructor(Auth) {
+  constructor(Auth, userService) {
     this.Auth = Auth;
+    this.userService = userService;
+
+    Auth.getCurrentUser(userObject => {
+      this.info = {
+        name: userObject.name,
+        city: userObject.city,
+        state: userObject.state
+      };
+    });
   }
 
   changePassword(form) {
@@ -24,6 +33,10 @@ class SettingsController {
           this.message = '';
         });
     }
+  }
+
+  updateInfo() {
+    this.userService.updateInfo(this.info);
   }
 }
 

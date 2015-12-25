@@ -1,15 +1,15 @@
 /**
- * Thing model events
+ * Album model events
  */
 
 'use strict';
 
 import {EventEmitter} from 'events';
-var Thing = require('./thing.model');
-var ThingEvents = new EventEmitter();
+var Album = require('./album.model');
+var AlbumEvents = new EventEmitter();
 
 // Set max event listeners (0 == unlimited)
-ThingEvents.setMaxListeners(0);
+AlbumEvents.setMaxListeners(0);
 
 // Model events
 var events = {
@@ -20,14 +20,14 @@ var events = {
 // Register the event emitter to the model events
 for (var e in events) {
   var event = events[e];
-  Thing.schema.post(e, emitEvent(event));
+  Album.schema.post(e, emitEvent(event));
 }
 
 function emitEvent(event) {
   return function(doc) {
-    ThingEvents.emit(event + ':' + doc._id, doc);
-    ThingEvents.emit(event, doc);
+    AlbumEvents.emit(event + ':' + doc._id, doc);
+    AlbumEvents.emit(event, doc);
   }
 }
 
-export default ThingEvents;
+export default AlbumEvents;

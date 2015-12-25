@@ -1,16 +1,17 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/things              ->  index
- * POST    /api/things              ->  create
- * GET     /api/things/:id          ->  show
- * PUT     /api/things/:id          ->  update
- * DELETE  /api/things/:id          ->  destroy
+ * GET     /api/albums              ->  index
+ * POST    /api/albums              ->  create
+ * GET     /api/albums/:id          ->  show
+ * PUT     /api/albums/:id          ->  update
+ * DELETE  /api/albums/:id          ->  destroy
  */
 
 'use strict';
 
 import _ from 'lodash';
-var Thing = require('./thing.model');
+var Album = require('./album.model');
+var Trade = require('./../trade/trade.model');
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
@@ -59,44 +60,65 @@ function removeEntity(res) {
   };
 }
 
-// Gets a list of Things
+// Gets a list of Albums
 export function index(req, res) {
-  Thing.findAsync()
+  Album.findAsync({trade: null})
     .then(responseWithResult(res))
     .catch(handleError(res));
 }
 
-// Gets a single Thing from the DB
+// Gets a single Album from the DB
 export function show(req, res) {
-  Thing.findByIdAsync(req.params.id)
+  Album.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(responseWithResult(res))
     .catch(handleError(res));
 }
 
-// Creates a new Thing in the DB
+// Creates a new Album in the DB
 export function create(req, res) {
-  Thing.createAsync(req.body)
+  var album = req.body;
+  album.user = req.user._id;
+
+  Album.createAsync(album)
     .then(responseWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Updates an existing Thing in the DB
+// Updates an existing Album in the DB
 export function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  Thing.findByIdAsync(req.params.id)
+  Album.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(saveUpdates(req.body))
     .then(responseWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a Thing from the DB
+// Deletes a Album from the DB
 export function destroy(req, res) {
-  Thing.findByIdAsync(req.params.id)
+  Album.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
+}
+
+export function requested(req, res) {
+  Album.findAsync({user: req.user._id, trade: {$ne: null}})
+    .then(albums => {
+      Album.populate(albums, {path: 'trade'}, (err, docs) => {
+        if (err) {
+          res.status(400).end();
+          return;
+        }
+
+        res
+          .status(200)
+          .json(docs)
+          .end();
+      });
+    })
+    .catch(handleError(res, 400));
 }
