@@ -12,6 +12,7 @@
 import _ from 'lodash';
 var Album = require('./album.model');
 var Trade = require('./../trade/trade.model');
+var https = require('https');
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
@@ -121,4 +122,24 @@ export function requested(req, res) {
       });
     })
     .catch(handleError(res, 400));
+}
+
+export function cover(req, res) {
+  //https://itunes.apple.com/WebObjects/MZStoreServices.woa/ws/wsSearch
+  https.get(`https://itunes.apple.com/search?media=music&entity=album&term=${req.query.term}`, (resp) => {
+    var data = '';
+
+    resp.on('data', (chunk) => {
+      data += chunk;
+    });
+
+    resp.on('end', () => {
+      res
+        .status(200)
+        .json(JSON.parse(data))
+        .end();
+    });
+  }).on('error', err => {
+    res.status(400).send(err).end();
+  });
 }

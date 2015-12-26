@@ -19,7 +19,17 @@
     <div>
         <h4>Album list</h4>
         <div ng-repeat="album in albumsCtrl.albums">
-            {{ album.name }} by {{ album.artist }} <button class="btn btn-secondary btn-sm" ng-hide="albumsCtrl.currentUser._id === album.user" ng-click="albumsCtrl.trade(album)">Trade</button>
+            <div>
+                <img ng-src="{{ album.image }}" alt="">
+            </div>
+            <div>
+                {{ album.name }}
+            </div>
+            <div>by</div>
+            <div>{{ album.artist }}</div>
+            <div>
+                <button class="btn btn-secondary btn-sm" ng-hide="albumsCtrl.currentUser._id === album.user" ng-click="albumsCtrl.trade(album)">Trade</button>
+            </div>
         </div>
     </div>
 </div>

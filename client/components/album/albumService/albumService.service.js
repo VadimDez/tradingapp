@@ -7,7 +7,7 @@ class albumService {
 
   get(id) {
     if (id) {
-      return this.$http.get('/api/albums/' + id);
+      return this.$http.get(`/api/albums/${id}`);
     }
 
     return this.$http.get('/api/albums');
@@ -31,6 +31,21 @@ class albumService {
 
   trade(id) {
     return this.$http.post(`/api/albums/${id}/trade`);
+  }
+
+  /**
+   * Get cover(s)
+   *
+   * @param artist
+   * @param album
+   * @returns {*}
+   */
+  getCover(artist, album) {
+    return this.$http({
+      method: 'GET',
+      url: '/api/albums/cover',
+      params: {term: `${artist || ''} ${album || ''}`}
+    });
   }
 }
 
