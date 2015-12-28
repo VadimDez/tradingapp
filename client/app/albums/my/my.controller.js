@@ -1,11 +1,18 @@
-class AddAlbumCtrl {
-  constructor(albumService, $timeout) {
+class MyCtrl {
+  constructor(albumService, $timeout, $state) {
+    this.albums = [];
     this.newAlbum = {};
     this.albumService = albumService;
     this.covers = [];
     this.$timeout = $timeout;
     this.timeoutCb = null;
     this.loading = false;
+    this.$state = $state;
+
+    albumService.filter({mine: true})
+      .then(data => {
+        this.albums = data.data;
+      });
   }
 
   create() {
@@ -13,6 +20,7 @@ class AddAlbumCtrl {
       .then(() => {
         this.newAlbum = {};
         this.covers = [];
+        this.$state.go('albums');
       });
   }
 
@@ -37,4 +45,4 @@ class AddAlbumCtrl {
   }
 }
 angular.module('tradingappApp')
-  .controller('AddAlbumCtrl', AddAlbumCtrl);
+  .controller('MyCtrl', MyCtrl);

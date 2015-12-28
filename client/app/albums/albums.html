@@ -1,34 +1,71 @@
 <navbar></navbar>
 <div class="container">
-    <div ng-show="albumsCtrl.requestedTrades.length">
-        <h4>Requested by you:</h4>
 
-        <div ng-repeat="trade in albumsCtrl.requestedTrades">
-            {{ trade.album.name }} by {{ trade.album.artist }} <button class="btn btn-danger" ng-click="albumsCtrl.cancelTrade(trade)">Remove</button>
+    <div id="banner" class="text-center">
+        <h2>Trade your music</h2>
+        <h4></h4>
+    </div>
+
+    <div class="tabs row">
+        <div class="col-sm-12 text-center">
+            <button class="btn" ng-class="{active: albumsCtrl.tab === 'all'}" ng-click="albumsCtrl.selectTab('all')">List</button>
+            <button class="btn" ng-class="{active: albumsCtrl.tab === 'requested'}" ng-click="albumsCtrl.selectTab('requested')">Requested</button>
+            <button class="btn" ng-class="{active: albumsCtrl.tab === 'requests'}" ng-click="albumsCtrl.selectTab('requests')">Requests</button>
         </div>
     </div>
 
-    <div ng-show="albumsCtrl.requestedAlbums.length">
-        <h4>Requested to you:</h4>
-
-        <div ng-repeat="album in albumsCtrl.requestedAlbums">
-            {{ album.name }} by {{ album.artist }} <button class="btn btn-success">Accept</button> <button class="btn btn-danger" ng-click="albumsCtrl.cancelRequestedAlbum(album)">Remove</button>
+    <div class="row" ng-show="albumsCtrl.tab === 'all'">
+        <div class="col-xs-12 col-sm-6 col-md-3 album" ng-repeat="album in albumsCtrl.albums">
+            <div>
+                <img ng-src="{{ album.image }}" alt="{{ album.name }}" class="img-responsive">
+            </div>
+            <div class="caption">
+                <h4>{{ album.name }}</h4>
+                <h5>{{ album.artist }}</h5>
+                <div class="actions">
+                    <button class="btn btn-outline" ng-hide="albumsCtrl.currentUser._id === album.user" ng-click="albumsCtrl.trade(album)">Trade</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div>
-        <h4>Album list</h4>
-        <div ng-repeat="album in albumsCtrl.albums">
+    <div class="row" ng-show="albumsCtrl.tab === 'requested'">
+        <!--<div class="col-sm-12 text-center">-->
+            <!--<h4>Requested by you:</h4>-->
+        <!--</div>-->
+
+        <div class="col-xs-12 col-sm-6 col-md-3 album" ng-repeat="trade in albumsCtrl.requestedTrades">
             <div>
-                <img ng-src="{{ album.image }}" alt="">
+                <img ng-src="{{ trade.album.image }}" alt="{{ trade.album.name }}" class="img-responsive">
             </div>
-            <div>
-                {{ album.name }}
+            <div class="caption">
+                <h4>{{ trade.album.name }}</h4>
+                <h5>{{ trade.album.artist }}</h5>
+                <div class="actions">
+                    <button type="button" class="btn btn-success" ng-show="trade.accepted">Accepted</button>
+                    <button class="btn btn-outline" ng-click="albumsCtrl.cancelTrade(trade)">Remove</button>
+                </div>
             </div>
-            <div>by</div>
-            <div>{{ album.artist }}</div>
+        </div>
+    </div>
+
+    <div class="row" ng-show="albumsCtrl.tab === 'requests'">
+        <!--<div class="col-sm-12 text-center">-->
+            <!--<h4>Requested to you:</h4>-->
+        <!--</div>-->
+
+        <div class="col-xs-12 col-sm-6 col-md-3 album" ng-repeat="album in albumsCtrl.requestedAlbums">
             <div>
-                <button class="btn btn-secondary btn-sm" ng-hide="albumsCtrl.currentUser._id === album.user" ng-click="albumsCtrl.trade(album)">Trade</button>
+                <img ng-src="{{ album.image }}" alt="{{ album.name }}" class="img-responsive">
+            </div>
+            <div class="caption">
+                <h4>{{ album.name }}</h4>
+                <h5>{{ album.artist }}</h5>
+                <div class="actions">
+                    <button type="button" class="btn btn-success" ng-show="album.trade.accepted">Accepted</button>
+                    <button class="btn btn-outline" ng-click="albumsCtrl.acceptTrade(album)" ng-hide="album.trade.accepted">Accept</button>
+                    <button class="btn btn-outline" ng-click="albumsCtrl.cancelRequestedAlbum(album)">Decline</button>
+                </div>
             </div>
         </div>
     </div>

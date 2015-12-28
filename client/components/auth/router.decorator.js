@@ -18,7 +18,7 @@ angular.module('tradingappApp.auth')
 
           event.preventDefault();
           return Auth.isLoggedIn().then(is => {
-            $state.go(is ? 'main' : 'login');
+            $state.go(is ? 'albums' : 'login');
           });
         });
       } else {
@@ -28,7 +28,7 @@ angular.module('tradingappApp.auth')
           }
 
           event.preventDefault();
-          $state.go('main');
+          $state.go('albums');
         });
       }
     });    

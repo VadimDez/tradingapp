@@ -14,10 +14,92 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
   padding: 0.2em 0;
 }
 
+// define colors
+$red: #FF5353;
+
+body {
+  font-family: 'Roboto', sans-serif;
+
+  button, .btn {
+    &.active, &:focus {
+      outline: 0 !important;
+    }
+  }
+
+  .btn.btn-outline {
+    background: transparent;
+    border: 2px solid $red;
+    border-radius: 3px;
+    &:hover {
+      background-color: darken($red, 5%);
+      color: #FFFFFF;
+    }
+    &[disabled] {
+      border-color: lighten($red, 10%);
+      background-color: lighten($red, 10%);
+      color: #FFFFFF;
+    }
+    &:focus {
+      color: #FFFFFF;
+    }
+  }
+
+  .navbar-default {
+    background-color: transparent;
+    border: none;
+  }
+
+  .auth {
+    .btn {
+      color: #000000;
+    }
+  }
+
+  .album {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 30px;
+
+    img {
+      width: 100%;
+    }
+
+    .caption {
+      color: #ffffff;
+      position: absolute;
+      top: -100%;
+      background-color: rgba(0, 0, 0, 0.46);
+      left: 15px;
+      right: 15px;
+      height: 100%;
+      text-align: center;
+
+      -o-transition: all 0.3s cubic-bezier(0.4, 0, 1, 1) 0s;
+      -moz-transition: all 0.3s cubic-bezier(0.4, 0, 1, 1) 0s;
+      -webkit-transition: all 0.3s cubic-bezier(0.4, 0, 1, 1) 0s;
+      -ms-transition: all 0.3s cubic-bezier(0.4, 0, 1, 1) 0s;
+      transition: all 0.3s cubic-bezier(0.4, 0, 1, 1) 0s;
+
+      .actions {
+        .btn-success {
+          padding-top: 7px;
+          padding-bottom: 7px;
+        }
+      }
+    }
+
+    &:hover {
+      .caption {
+        top: 0;
+      }
+    }
+  }
+}
+
 // Component styles are injected through grunt
 // injector
 @import 'admin/admin.scss';
 @import 'albums/albums.scss';
-@import 'main/main.scss';
+@import 'albums/my/my.scss';
 @import '../components/footer/footer.scss';
 // endinjector

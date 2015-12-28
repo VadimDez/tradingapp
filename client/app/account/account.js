@@ -11,12 +11,12 @@ angular.module('tradingappApp')
       })
       .state('logout', {
         url: '/logout?referrer',
-        referrer: 'main',
+        referrer: 'albums',
         template: '',
         controller: function($state, Auth) {
           var referrer = $state.params.referrer ||
                           $state.current.referrer ||
-                          'main';
+                          'albums';
           Auth.logout();
           $state.go(referrer);
         }

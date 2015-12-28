@@ -1,0 +1,54 @@
+<navbar></navbar>
+<div class="container add">
+    <form class="form" name="newAlbumForm" ng-submit="myCtrl.create()" novalidate>
+        <h2>Add new album</h2>
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="form-group">
+                    <label>Artist name</label>
+                    <input type="text" name="artist" placeholder="Artist name" class="form-control" ng-model="myCtrl.newAlbum.artist" ng-change="myCtrl.searchCover(myCtrl.newAlbum.artist, myCtrl.newAlbum.name)" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Album name</label>
+                    <input type="text" name="name" placeholder="Album name" class="form-control" ng-model="myCtrl.newAlbum.name" ng-change="myCtrl.searchCover(myCtrl.newAlbum.artist, myCtrl.newAlbum.name)" required>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" ng-disabled="!newAlbumForm.$valid || myCtrl.loading" class="btn btn-outline">Add</button>
+                </div>
+            </div>
+
+
+            <div class="col-sm-7">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-12">Select cover</div>
+                        <div ng-show="myCtrl.loading">Loading...</div>
+                        <div class="col-sm-2 cover" ng-class="({active: myCtrl.newAlbum.image === cover.artworkUrl100})" ng-repeat="cover in myCtrl.covers">
+                            <input type="radio" name="image" ng-model="myCtrl.newAlbum.image" ng-value="cover.artworkUrl100" class="hidden" required>
+                            <img ng-src="{{ cover.artworkUrl100 }}" ng-click="myCtrl.newAlbum.image = cover.artworkUrl100" alt="cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div>
+        <h2>Your albums</h2>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-3 album" ng-repeat="album in myCtrl.albums">
+                <div>
+                    <img ng-src="{{ album.image }}" alt="{{ album.name }}" class="img-responsive">
+                </div>
+                <div class="caption">
+                    <h4>{{ album.name }}</h4>
+                    <h5>{{ album.artist }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer></footer>

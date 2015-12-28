@@ -7,6 +7,7 @@ class Albums {
     this.requestedAlbums = [];
     this.albumService = albumService;
     this.tradeService = tradeService;
+    this.tab = 'all';
 
     this.currentUser = Auth.getCurrentUser();
 
@@ -44,6 +45,16 @@ class Albums {
       .then(() => {
         this.requestedAlbums.splice(this.requestedAlbums.indexOf(album), 1);
       });
+  }
+
+  acceptTrade(album) {
+    this.tradeService.accept(album.trade._id).then(() => {
+      album.trade.accepted = true;
+    });
+  }
+
+  selectTab(name) {
+    this.tab = name;
   }
 }
 

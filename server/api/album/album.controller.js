@@ -63,7 +63,14 @@ function removeEntity(res) {
 
 // Gets a list of Albums
 export function index(req, res) {
-  Album.findAsync({trade: null})
+  var filter = {trade: null};
+
+  if (req.query.mine) {
+    filter = {user: req.user._id};
+  }
+
+
+  Album.findAsync(filter)
     .then(responseWithResult(res))
     .catch(handleError(res));
 }
@@ -80,6 +87,10 @@ export function show(req, res) {
 export function create(req, res) {
   var album = req.body;
   album.user = req.user._id;
+
+  if (album.image) {
+    album.image = album.image.replace(/100x100/ig, '300x300');
+  }
 
   Album.createAsync(album)
     .then(responseWithResult(res, 201))

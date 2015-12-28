@@ -1,0 +1,16 @@
+#banner {
+  margin-bottom: 40px;
+}
+
+.tabs {
+  margin-bottom: 20px;
+  .btn {
+    text-transform: uppercase;
+    background-color: transparent;
+    &:hover, &.active {
+      background-color: darken($red, 5%);
+      border-radius: 3px;
+      color: #FFFFFF;
+    }
+  }
+}

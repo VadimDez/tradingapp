@@ -40,12 +40,22 @@ function handleEntityNotFound(res) {
   };
 }
 
-function saveUpdates(updates) {
+function accept(req) {
+
   return function(entity) {
-    var updated = _.merge(entity, updates);
-    return updated.saveAsync()
-      .spread(updated => {
-        return updated;
+    return Album.findByIdAsync(entity.album)
+      .then(album => {
+
+        if (req.user._id.toString() !== album.user.toString()) {
+          return null;
+        }
+
+
+        entity.accepted = true;
+        return entity.saveAsync()
+          .spread(entity => {
+            return entity;
+          });
       });
   };
 }
@@ -84,14 +94,6 @@ export function index(req, res) {
         res.status(200).json(_entity).end();
       });
     })
-    .catch(handleError(res));
-}
-
-// Gets a single Trade from the DB
-export function show(req, res) {
-  Trade.findByIdAsync(req.params.id)
-    .then(handleEntityNotFound(res))
-    .then(responseWithResult(res))
     .catch(handleError(res));
 }
 
@@ -149,12 +151,9 @@ export function create(req, res) {
 
 // Updates an existing Trade in the DB
 export function update(req, res) {
-  if (req.body._id) {
-    delete req.body._id;
-  }
   Trade.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
-    .then(saveUpdates(req.body))
+    .then(accept(req))
     .then(responseWithResult(res))
     .catch(handleError(res));
 }

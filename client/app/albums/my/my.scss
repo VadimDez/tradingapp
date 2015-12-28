@@ -1,0 +1,11 @@
+.add {
+  .cover {
+    margin-bottom: 30px;
+    img {
+      width: 100%;
+    }
+    &.active, &:hover {
+      opacity: 0.8;
+    }
+  }
+}

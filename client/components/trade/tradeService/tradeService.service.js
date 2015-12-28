@@ -16,6 +16,10 @@ class tradeService {
   cancel(id) {
     return this.$http.delete(`/api/trades/${id}`);
   }
+
+  accept(id) {
+    return this.$http.put(`/api/trades/${id}`);
+  }
 }
 
 angular.module('tradingappApp')
