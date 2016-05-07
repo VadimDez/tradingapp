@@ -11,7 +11,7 @@ angular.module('tradingappApp.auth')
       }
 
       if(typeof next.authenticate === 'string') {
-        Auth.hasRole(next.authenticate, _.noop).then(has => {
+        Auth.hasRole(next.authenticate, () => {}).then(has => {
           if(has) {
             return;
           }
@@ -22,7 +22,7 @@ angular.module('tradingappApp.auth')
           });
         });
       } else {
-        Auth.isLoggedIn(_.noop).then(is => {
+        Auth.isLoggedIn(() => {}).then(is => {
           if(is) {
             return;
           }
