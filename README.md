@@ -1,5 +1,7 @@
 # Music Trading App
 
+Webapp (frontend+api) for trading music online.
+
 ### Run
 
 Mongodb is required and should be configured in environment configuration
