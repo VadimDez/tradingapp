@@ -1,6 +1,6 @@
 # Music Trading App
 
-Webapp (frontend+api) for trading music online.
+WebApp (frontend + backend with api) for trading music online.
 
 ### Run
 
