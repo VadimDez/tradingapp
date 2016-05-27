@@ -11,7 +11,6 @@
 
 import _ from 'lodash';
 var Album = require('./album.model');
-var Trade = require('./../trade/trade.model');
 var https = require('https');
 
 function handleError(res, statusCode) {

@@ -50,7 +50,6 @@ function accept(req) {
           return null;
         }
 
-
         entity.accepted = true;
         return entity.saveAsync()
           .spread(entity => {
