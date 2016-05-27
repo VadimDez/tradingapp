@@ -31,3 +31,6 @@ grunt serve
 * MongoDB
 * Angular
 * SCSS
+
+### License
+MIT © Vadym Yatsyuk
