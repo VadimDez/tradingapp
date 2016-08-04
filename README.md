@@ -33,4 +33,4 @@ grunt serve
 * SCSS
 
 ### License
-MIT © Vadym Yatsyuk
+[MIT](https://tldrlegal.com/license/mit-license) © [Vadym Yatsyuk](https://github.com/vadimdez)
